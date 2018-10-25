@@ -1,0 +1,388 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <regex>
+#include <bits/stdc++.h>
+
+using namespace std;
+#define PATH "C:/Users/GUT3HC/Desktop/parse config/DemoConfig - Copy.cfg"
+enum SyncPointType : uint16_t {
+    kFGActivated =0,
+    kAllComponentRegistered,
+    kAllComponentReachedFirstState,
+    kFreeDefined
+};
+struct DependencyFG {
+    DependencyFG(){};
+    std::string FGname;
+    SyncPointType type;
+};
+class FGStartupInfo{
+
+public:
+    FGStartupInfo(){};
+    virtual         ~FGStartupInfo(){};
+    std::string name;
+    //Internal FG info
+    std::string state;
+    std::vector <std::string> exeName;
+    bool bHasTriggeredActivate;
+    //Sync Points related to FG
+    bool bActivatedSync;
+    bool bAllComponentOfFGRegisteredSync;
+    bool bAllComponentOfFGReachedFirstStateSync;
+    //FG dependencies
+    std::vector <DependencyFG> listDependFG;
+
+protected:
+
+};
+
+
+FGStartupInfo  getFGConfig(std::string input){
+
+
+
+
+}
+int main()
+{
+    string fileName  = PATH;
+    ifstream file(fileName);
+    if(!file){
+        cout << "Invalid file !" << endl;
+    }
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    string str = buffer.str();
+
+
+try {
+
+  std::regex testRegex("\\s*\\{[\\w\\s\\/\\d]*Name\\s*:\\s*[^\\s,]*,\\s*(\\/\\/\\s*[^\\n]*)*\\s*State\\s*:\\s*[^\\s,]*,\\s*(\\/\\/\\s*[^\\n]*)*\\s*ExecuteList\\s*:\\s*\\[\\/\\/ array(\\s*[^\\s,\\]]*,\\s*)+\\],\\s*DependencyFGList\\s*:\\s*\\[(\\s*[\\S]*\\s*:\\s*\\{\\s*[^,]*,\\s*[\\w]*\\s*\\},?\\s*)+\\]\\s*\\}\\s*");
+  vector<int> index_matches;
+  for(auto it = std::sregex_iterator(str.begin(), str.end(), testRegex);it != std::sregex_iterator();++it)
+{
+    cout << "it->position() :  = "<<it->position() << endl;
+    index_matches.push_back(it->position());
+}
+  smatch match;
+    cout << "index_matches.size() = " << index_matches.size() << endl;
+
+
+    /*for(unsigned int i = 0; i < index_matches.size(); i++){
+        string subStr = str.substr(index_matches[i]);
+      if (regex_search(subStr, match, testRegex) == true) {
+        string result = str.substr(index_matches[i],match.length()) ;
+        cout << result << endl;
+      }
+    }*/
+    FGStartupInfo mFGStartupInfo;
+    // define regex
+    std::regex nameRegex("Name\\s*:\\s*[^\\s,]*,");
+    std::regex stateRegex("\\s*State\\s*:\\s*[^\\s,]*,");
+    std::regex executeRegex("\\s*ExecuteList\\s*:\\s*\\[\\/\\/ array(\\s*[^\\s,\\]]*,\\s*)+\\],");
+    std::regex executeItemRegex("\\s*[^\\s,\\]]*,\\s*");
+    std::regex dependencyRegex("\\s*DependencyFGList\\s*:\\s*\\[(\\s*[\\S]*\\s*:\\s*\\{\\s*[^,]*,\\s*[\\w]*\\s*\\},?\\s*)+\\]\\s*");
+    std::regex dependencyItemRegex("\\{\\s*[^,]*,\\s*[\\w]*\\s*\\}");
+
+      if (regex_search(str, match, testRegex) == true) {
+        string result = str.substr(index_matches[0],match.length()) ;
+        cout << result << endl;
+              if (regex_search(result, match, nameRegex) == true) {
+                    string nameStr = match.str();
+                    string name = nameStr.substr(nameStr.find(":")+1,nameStr.find(",")- nameStr.find(":") -1) ;
+                    cout << "Name = " <<name << endl;
+                }
+              if (regex_search(result, match, stateRegex) == true) {
+                    string stateStr = match.str();
+                    string state = stateStr.substr(stateStr.find(":")+1,stateStr.find(",")- stateStr.find(":") -1) ;
+                    cout << "State = "<< state << endl;
+                }
+              if (regex_search(result, match, executeRegex) == true) {
+                    cout << "Execute : = " << match.str() << endl;
+                    string executeListStr = match.str();
+                    vector<int> exe_index_matches;
+                      for(auto it = std::sregex_iterator(executeListStr.begin(), executeListStr.end(), executeItemRegex);it != std::sregex_iterator();++it)
+                        {
+                            cout << "it->position() :  = "<<it->position() << endl;
+                            exe_index_matches.push_back(it->position());
+                            string exeSubString = executeListStr.substr(it->position());
+                            cout << "exeSubString = " << exeSubString.substr(0,exeSubString.find(","))<< endl;
+                        }
+
+                }
+              if (regex_search(result, match, dependencyRegex) == true) {
+                            cout << "Dependency : = " << match.str() << endl;
+                    string dependencyListStr = match.str();
+                    vector<int> depen_index_matches;
+                      for(auto it = std::sregex_iterator(dependencyListStr.begin(), dependencyListStr.end(), dependencyItemRegex);it != std::sregex_iterator();++it)
+                        {
+                            cout << "it->position() :  = "<<it->position() << endl;
+                            depen_index_matches.push_back(it->position());
+                            string depenSubString = dependencyListStr.substr(it->position());
+                            cout << "dependencyName= " << depenSubString.substr(1,depenSubString.find(",")-1)<< endl;
+                            cout << "dependencyType= " << depenSubString.substr(depenSubString.find(",")+1,depenSubString.find("}") - depenSubString.find(",") -1)<< endl;
+                        }
+                }
+      }
+
+  /*if(regex_match(str,testRegex)){
+    cout << "OK" <<endl;
+  } else {
+    cout << "Not match" << endl;
+  }*/
+
+  /*std::sregex_iterator next(str.begin(), str.end(), fGRegex);
+  std::sregex_iterator words_end  = std::sregex_iterator();
+  std::cout << __FUNCTION__ <<__LINE__ << "\n";
+  while (next != words_end) {
+    std::smatch match = *next;
+    std::cout << match.str() << "\n";
+    next++;
+  }*/
+} catch (std::regex_error& e) {
+    cout << "Error !" << e.what() << endl;
+  // Syntax error in the regular expression
+}
+
+    /*
+    std::cout << "hello " << endl;
+std::vector <FGStartupInfo> databaseFG;
+std::ifstream file(PATH);
+string line;
+string OldFGFound ="notFound";
+
+
+while (getline(file,line)){
+   // cout<<line<<endl;
+    string fgTagName ="[FGname]:";
+    string exeListTag="exelist:";
+    string dependFGTag="dependFG:";
+    std::size_t pos = line.find(fgTagName);      // position of "live" in str
+    string currentFG;
+    if(pos != std::string::npos){
+        currentFG=line.substr(pos+fgTagName.size());
+        cout<<"Found FG"<<currentFG<<endl;
+    }
+    if(currentFG != OldFGFound){
+        FGStartupInfo infoFG;
+        OldFGFound = currentFG;
+        infoFG.name=currentFG;
+
+        std::size_t posExe = line.find(exeListTag);
+        if(posExe!= std::string::npos){
+            string listOfExe = line.substr(posExe+exeListTag.size());
+            cout<<"List of exe found: "<<listOfExe<<endl;
+            string exeListRemaining = listOfExe;
+            std::size_t posTemp = listOfExe.find(",");
+            if(posTemp == std::string::npos){
+                //Only 1 executable file found
+                infoFG.exeName.push_back(listOfExe);
+            }
+             else{
+                while(posTemp != std::string::npos){
+                    string exeName = exeListRemaining.substr(0,posTemp);
+                    infoFG.exeName.push_back(exeName);
+                    cout<<"Found exe name:"<<exeName<<endl;
+                    exeListRemaining = exeListRemaining.substr(posTemp+1);
+                    posTemp = exeListRemaining.find(",");
+                }
+
+            }
+            if(!exeListRemaining.empty()){
+                infoFG.exeName.push_back(exeListRemaining);
+                cout<<"Found exe name:"<<exeListRemaining<<endl;
+            }
+
+        }
+
+       // Now push back to database
+       databaseFG.push_back(infoFG);
+
+        }
+    }*/
+   // cout << "Hello world!" << endl;
+   //cout << str << endl;
+    return 0;
+}
+
+
+
+
+
+
+
+//
+
+
+
+
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <regex>
+#include <bits/stdc++.h>
+
+using namespace std;
+#define PATH "C:/Users/GUT3HC/Desktop/parse config/DemoConfig - Copy.cfg"
+enum SyncPointType : uint16_t {
+    kFGActivated =0,
+    kAllComponentRegistered,
+    kAllComponentReachedFirstState,
+    kFreeDefined
+};
+struct DependencyFG {
+    DependencyFG(){};
+    std::string FGname;
+    SyncPointType type;
+};
+class FGStartupInfo{
+
+public:
+    FGStartupInfo(){};
+    virtual         ~FGStartupInfo(){};
+    std::string name;
+    //Internal FG info
+    std::string state;
+    std::vector <std::string> exeName;
+    bool bHasTriggeredActivate;
+    //Sync Points related to FG
+    bool bActivatedSync;
+    bool bAllComponentOfFGRegisteredSync;
+    bool bAllComponentOfFGReachedFirstStateSync;
+    //FG dependencies
+    std::vector <DependencyFG> listDependFG;
+    void toString(){
+        cout << "name = " << name << endl;
+        cout << "state = " << state <<endl;
+        cout << "execute list : " << endl;
+        for(unsigned int i = 0 ; i < exeName.size(); i++){
+            cout << "exeName " << i << "= "<<exeName[i] << endl;
+        }
+        cout << "dependency list : " << endl;
+        for(unsigned int i = 0 ; i < listDependFG.size(); i++){
+            cout << "dependency " << i+1 << endl;
+            cout << "name = " << listDependFG[i].FGname<< endl;
+        }
+    }
+
+protected:
+
+};
+
+string trim(std::string input){
+    string ret = "";
+    smatch match;
+    std::regex charRegex("\\S+");
+      if (regex_search(input, match, charRegex) == true) {
+        ret = match.str();
+    }
+    return ret;
+}
+
+
+FGStartupInfo  getFGConfig(std::string input){
+
+
+
+
+}
+int main()
+{
+    string fileName  = PATH;
+    ifstream file(fileName);
+    if(!file){
+        cout << "Invalid file !" << endl;
+    }
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    string str = buffer.str();
+    FGStartupInfo mFGStartupInfo;
+    DependencyFG mDependencyFG;
+
+try {
+
+  std::regex testRegex("\\s*\\{[\\w\\s\\/\\d]*Name\\s*:\\s*[^\\s,]*,\\s*(\\/\\/\\s*[^\\n]*)*\\s*State\\s*:\\s*[^\\s,]*,\\s*(\\/\\/\\s*[^\\n]*)*\\s*ExecuteList\\s*:\\s*\\[\\/\\/ array(\\s*[^\\s,\\]]*,\\s*)+\\],\\s*DependencyFGList\\s*:\\s*\\[(\\s*[\\S]*\\s*:\\s*\\{\\s*[^,]*,\\s*[\\w]*\\s*\\},?\\s*)+\\]\\s*\\}\\s*");
+  vector<int> index_matches;
+  for(auto it = std::sregex_iterator(str.begin(), str.end(), testRegex);it != std::sregex_iterator();++it)
+    {
+        cout << "it->position() :  = "<<it->position() << endl;
+        index_matches.push_back(it->position());
+    }
+  smatch match;
+    cout << "index_matches.size() = " << index_matches.size() << endl;
+    vector<FGStartupInfo> nFGStartupInfoList ;
+
+
+    // define regex
+    std::regex nameRegex("Name\\s*:\\s*[^\\s,]*,");
+    std::regex stateRegex("\\s*State\\s*:\\s*[^\\s,]*,");
+    std::regex executeRegex("\\s*ExecuteList\\s*:\\s*\\[\\/\\/ array(\\s*[^\\s,\\]]*,\\s*)+\\],");
+    std::regex executeItemRegex("\\s*[^\\s,\\]]+,\\s*");
+    std::regex dependencyRegex("\\s*DependencyFGList\\s*:\\s*\\[(\\s*[\\S]*\\s*:\\s*\\{\\s*[^,]*,\\s*[\\w]*\\s*\\},?\\s*)+\\]\\s*");
+    std::regex dependencyItemRegex("\\{\\s*[^,]*,\\s*[\\w]*\\s*\\}");
+
+      if (regex_search(str, match, testRegex) == true) {
+        string result = str.substr(index_matches[0],match.length()) ;
+        cout << result << endl;
+              if (regex_search(result, match, nameRegex) == true) {
+                    string nameStr = match.str();
+                    string name = nameStr.substr(nameStr.find(":")+1,nameStr.find(",")- nameStr.find(":") -1) ;
+                    cout << "Name = " <<name << endl;
+                    mFGStartupInfo.name = trim(name);
+                }
+              if (regex_search(result, match, stateRegex) == true) {
+                    string stateStr = match.str();
+                    string state = stateStr.substr(stateStr.find(":")+1,stateStr.find(",")- stateStr.find(":") -1) ;
+                    cout << "State = "<< state << endl;
+                    mFGStartupInfo.state = trim(state);
+                }
+              if (regex_search(result, match, executeRegex) == true) {
+                    cout << "Execute : = " << match.str() << endl;
+                    string executeListStr = match.str();
+                    vector<int> exe_index_matches;
+                      for(auto it = std::sregex_iterator(executeListStr.begin(), executeListStr.end(), executeItemRegex);it != std::sregex_iterator();++it)
+                        {
+                            cout << "it->position() :  = "<<it->position() << endl;
+                            exe_index_matches.push_back(it->position());
+                            string exeSubString = executeListStr.substr(it->position());
+                            string exeName = trim(exeSubString.substr(0,exeSubString.find(",")));
+                            cout << "exeSubString = " << exeName << endl;
+                            mFGStartupInfo.exeName.push_back(exeName);
+                        }
+
+                }
+              if (regex_search(result, match, dependencyRegex) == true) {
+                            cout << "Dependency : = " << match.str() << endl;
+                    string dependencyListStr = match.str();
+                    vector<int> depen_index_matches;
+                      for(auto it = std::sregex_iterator(dependencyListStr.begin(), dependencyListStr.end(), dependencyItemRegex);it != std::sregex_iterator();++it)
+                        {
+                            cout << "it->position() :  = "<<it->position() << endl;
+                            depen_index_matches.push_back(it->position());
+                            string depenSubString = dependencyListStr.substr(it->position());
+                            string depName = trim(depenSubString.substr(1,depenSubString.find(",")-1));
+                            string depType = trim(depenSubString.substr(depenSubString.find(",")+1,depenSubString.find("}") - depenSubString.find(",") -1));
+                            cout << "dependencyName= " << depName << endl;
+                            cout << "dependencyType= " << depType << endl;
+                            mDependencyFG.FGname = trim(depName);
+                            mDependencyFG.type = (SyncPointType)std::stoi(depType);
+                            mFGStartupInfo.listDependFG.push_back(mDependencyFG);
+                        }
+                }
+      }
+} catch (std::regex_error& e) {
+    cout << "Error !" << e.what() << endl;
+  // Syntax error in the regular expression
+}
+    cout << "result" << endl;
+    mFGStartupInfo.toString();
+    return 0;
+}
