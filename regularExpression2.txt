@@ -1,0 +1,15 @@
+\s*FG\s*:\s*\[\s*(\{[\w\s\/\d]*Name\s*:\s*[^\s,]*,\s*(\/\/\s*[^\n]*)*\s*State\s*:\s*[^\s,]*,\s*(\/\/\s*[^\n]*)*\s*ExecuteList\s*:\s*\[(\s*[^\s,\]]*\s*,\s*)+\],\s*DependencyFGList\s*:\s*\[(\s*[\S]*\s*:\s*\{\s*[^,]*,\s*[\w]*\s*\},?\s*)+\]\s*\}\s*(,)?\s*)+\]\s*
+
+
+name : \s*Name\s*\:\s*[^,#]+\s*,
+state : \s*State\s*\:\s*[^,#]+\s*,
+ExecuteList : \s*ExecuteList\s*\:\s*\[(\s*[^,#\s\]]+\s*,)*\s*[^,#\s\]]+\s*\]\s*,
+DependencyItem : \s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}
+DependencyFGList : \s*DependencyFGList\s*\:\s*\[(\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\},)*\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}\s*\]\s*
+file : \s*FG:\s*\[\s*(\{(\s*Name\s*\:\s*[^,#]+\s*,)(\s*State\s*\:\s*[^,#]+\s*,)(\s*ExecuteList\s*\:\s*\[(\s*[^,#\s\]]+\s*,)*\s*[^,#\s\]]+\s*\]\s*,)(\s*DependencyFGList\s*\:\s*\[(\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\},)*\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}\s*\]\s*)\}\s*,\s*)*(\{(\s*Name\s*\:\s*[^,#]+\s*,)(\s*State\s*\:\s*[^,#]+\s*,)(\s*ExecuteList\s*\:\s*\[(\s*[^,#\s\]]+\s*,)*\s*[^,#\s\]]+\s*\]\s*,)(\s*DependencyFGList\s*\:\s*\[(\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\},)*\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}\s*\]\s*)\}\s*)\]\s*
+
+
+
+
+
+right regex : \s*FG:\s*\[\s*(\{(\s*Name\s*\:\s*[^,#]+\s*,)(\s*State\s*\:\s*[^,#]+\s*,)(\s*ExecuteList\s*\:\s*\[(\s*[^,#\s\]]+\s*,)*\s*[^,#\s\]]+\s*\]\s*,)(\s*DependencyFGList\s*\:\s*\[(\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\},)*\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}\s*\]\s*)\}\s*,\s*)*(\{(\s*Name\s*\:\s*[^,#]+\s*,)(\s*State\s*\:\s*[^,#]+\s*,)(\s*ExecuteList\s*\:\s*\[(\s*[^,#\s\]]+\s*,)*\s*[^,#\s\]]+\s*\]\s*,)(\s*DependencyFGList\s*\:\s*\[(\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\},)*\s*[\w\d]+\s*\:\s*\{\s*[\w\d]+\s*,\s*[0-3]\s*\}\s*\]\s*)\}\s*)\]\s*
