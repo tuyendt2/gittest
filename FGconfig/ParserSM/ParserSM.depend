@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1540367005 source:d:\02_task\coding_practice\parsersm\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+
+1540538809 source:c:\users\gut3hc\desktop\parse config\parsersm\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<regex>
+	<bits/stdc++.h>
+	"fgconfig.h"
+
+1540553507 source:c:\users\gut3hc\desktop\parse config\parsersm\fgconfig.cpp
+	"fgconfig.h"
+
+1540554889 c:\users\gut3hc\desktop\parse config\parsersm\fgconfig.h
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<regex>
+	<bits/stdc++.h>
+	"fgconfig.h"
+
+1540634328 source:c:\users\dinh tuyen\desktop\gittest\config\gittest\fgconfig\parsersm\fgconfig.cpp
+	"fgconfig.h"
+
+1540737505 c:\users\dinh tuyen\desktop\gittest\config\gittest\fgconfig\parsersm\fgconfig.h
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<regex>
+
+1540632062 source:c:\users\dinh tuyen\desktop\gittest\config\gittest\fgconfig\parsersm\main.cpp
+	"fgconfig.h"
+

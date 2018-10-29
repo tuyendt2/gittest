@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1540367005 source:d:\02_task\coding_practice\parsersm\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+
+1540464835 source:c:\users\gut3hc\desktop\parse config\parsersm\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<regex>
+	<bits/stdc++.h>
+
+1540482775 source:c:\users\dinh tuyen\desktop\gittest\new git\gittest\parse config\parsersm\main.cpp
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	<sstream>
+	<regex>
+	<bits/stdc++.h>
+
